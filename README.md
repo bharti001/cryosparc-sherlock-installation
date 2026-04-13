@@ -7,7 +7,7 @@ Complete installation guide for CryoSPARC v4.7.1 on Stanford's Sherlock HPC clus
 **Date:** April 13, 2026  
 **CryoSPARC Version:** v4.7.1  
 **Cluster:** Stanford Sherlock  
-**License:** MIT
+**License:** NONE
 
 ---
 
