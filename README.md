@@ -71,7 +71,7 @@ Expected: ldd (GNU libc) 2.17
   -Access to /oak/stanford/groups/mjewett/bsingal/ (database location)  
   -Valid CryoSPARC license ID  
 
-## Installation Steps
+### Installation Steps
 
 ### 1. Request compute node
     ssh bsingal@login.sherlock.stanford.edu  
@@ -80,7 +80,7 @@ Expected: ldd (GNU libc) 2.17
 ### 2. Follow full installation guide
     See docs/INSTALLATION.md for complete instructions
 
-## Access Web Interface
+### Access Web Interface
 
 ### From your local computer:
   ssh -L 55550:COMPUTE_NODE:55550 bsingal@login.sherlock.stanford.edu  
@@ -88,11 +88,15 @@ Expected: ldd (GNU libc) 2.17
 ### Open browser to:
   http://localhost:55550  
 
+---
+
 ## Full Documentation
   📚 Detailed guides in the docs/ directory:  
     📘 Complete Installation Guide  
     📗 Daily Usage Guide  
     📙 Troubleshooting Guide  
+
+---
 
 ## Installation Summary
 System Specifications
@@ -119,6 +123,8 @@ Configuration
   License ID: XXXXX (recieved in email from Cryosparc)  
   Master: Dynamic hostname (updates per node)  
   Worker Lane: default  
+
+---
 
 ## Daily Usage
 Start CryoSPARC
@@ -153,6 +159,8 @@ Stop CryoSPARC
 ```
 ~/stop_cryosparc.sh
 ```
+---
+
 ## Helper Scripts
 
 | Script | Purpose |
@@ -161,6 +169,8 @@ Stop CryoSPARC
 |~/stop_cryosparc.sh | Stop CryoSPARC  |
 |~/check_cryosparc.sh| Check status    | 
 |~/backup_cryosparc.sh | Backup database | 
+
+---
 
 ## Troubleshooting
 
@@ -228,16 +238,21 @@ ssh -L 55550:HOSTNAME:55550 bsingal@login.sherlock.stanford.edu
 Web access
 http://localhost:55550
 ```
+---
+
 ### Support
   CryoSPARC: https://guide.cryosparc.com/  
   Sherlock: https://www.sherlock.stanford.edu/docs/  
   Issues: Open an issue in this repository
+
+---
 
 ### Acknowledgments
   Stanford Research Computing (Sherlock)  
   Structura Biotechnology (CryoSPARC)  
   Jewett Lab (support and resources)
 
+---
 ### Version History
   v1.0.0 (April 13, 2026) - Initial release  
   CryoSPARC v4.7.1 successfully installed
