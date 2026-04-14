@@ -31,13 +31,14 @@ This repository contains a **complete, tested installation guide** for CryoSPARC
 
 ### Why This Guide?
 
+```
 Sherlock runs **GLIBC 2.17**, which is incompatible with CryoSPARC v5.0.0+. This guide provides:
 - ✅ Tested installation procedure for v4.7.1
 - ✅ Optimized directory structure (software on /home, data on /oak)
 - ✅ Multi-node flexibility for compute sessions
 - ✅ Helper scripts for daily operations
 - ✅ Complete troubleshooting solutions
-
+```
 ---
 
 ## Critical Information
@@ -53,170 +54,195 @@ Sherlock runs **GLIBC 2.17**, which is incompatible with CryoSPARC v5.0.0+. This
 | **v4.x series**  | **2.17+**     | ✅ **YES**          |
 
 **Verify your GLIBC version:**
-```bash
+```
 ldd --version
-# Expected: ldd (GNU libc) 2.17
-DO NOT install CryoSPARC v5.0.0 or later until Sherlock upgrades GLIBC!
+```
+Expected: ldd (GNU libc) 2.17
+> DO NOT install CryoSPARC v5.0.0 or later until Sherlock upgrades GLIBC!
 
 ---
 
 ## Quick Start
 
-Prerequisites
-Stanford SUNet ID with Sherlock access
-Access to /home/groups/mjewett/bsingal/ (software location)
-Access to /oak/stanford/groups/mjewett/bsingal/ (data location)
-Valid CryoSPARC license ID
+### Prerequisites
 
-Installation Steps
+  -Stanford SUNet ID with Sherlock access  
+  -Access to /home/groups/mjewett/bsingal/ (software location)  
+  -Access to /oak/stanford/groups/mjewett/bsingal/ (database location)  
+  -Valid CryoSPARC license ID  
 
-# 1. Request compute node
-ssh bsingal@login.sherlock.stanford.edu
-sh_dev -c 4 -g 1 -t 02:00:00
+## Installation Steps
 
-# 2. Follow full installation guide
-# See docs/INSTALLATION.md for complete instructions
-Access Web Interface
+### 1. Request compute node
+    ssh bsingal@login.sherlock.stanford.edu  
+    sh_dev -c 4 -g 1 -t 02:00:00
 
-# From your local computer:
-ssh -L 55550:COMPUTE_NODE:55550 bsingal@login.sherlock.stanford.edu
+### 2. Follow full installation guide
+    See docs/INSTALLATION.md for complete instructions
 
-# Open browser to:
-http://localhost:55550
+## Access Web Interface
 
-Full Documentation
-📚 Detailed guides in the docs/ directory:
-📘 Complete Installation Guide
-📗 Daily Usage Guide
-📙 Troubleshooting Guide
+### From your local computer:
+  ssh -L 55550:COMPUTE_NODE:55550 bsingal@login.sherlock.stanford.edu  
 
-Installation Summary
+### Open browser to:
+  http://localhost:55550  
+
+## Full Documentation
+  📚 Detailed guides in the docs/ directory:  
+    📘 Complete Installation Guide  
+    📗 Daily Usage Guide  
+    📙 Troubleshooting Guide  
+
+## Installation Summary
 System Specifications
-Cluster: Stanford Sherlock
-GLIBC: 2.17
-CUDA: 12.8.0
-GPU: NVIDIA A30 MIG 1g.6gb (6GB)
-CPU: 32 cores
-RAM: 257 GB
+  Cluster: Stanford Sherlock  
+  GLIBC: 2.17  
+  CUDA: 12.8.0  
+  GPU: NVIDIA A30 MIG 1g.6gb (6GB)  
+  CPU: 32 cores  
+  RAM: 257 GB  
+
 Installation Locations
+  Software: /home/groups/mjewett/bsingal/cryosparc/software/  
+    ├── cryosparc_master/  
+    └── cryosparc_worker/  
 
-Software: /home/groups/mjewett/bsingal/cryosparc/software/
-├── cryosparc_master/
-└── cryosparc_worker/
+  Data: /oak/stanford/groups/mjewett/bsingal/cryosparc/  
+    ├── database/  
+    ├── projects/  
+    ├── cache/  
+    └── backups/  
 
-Data: /oak/stanford/groups/mjewett/bsingal/cryosparc/
-├── database/
-├── projects/
-├── cache/
-└── backups/
 Configuration
-Port: 55550
-License ID: 720c036e-34e3-11f1-9a66-2bb931982fae
-Master: Dynamic hostname (updates per node)
-Worker Lane: default
-Daily Usage
+  Port: 55550  
+  License ID: XXXXX (recieved in email from Cryosparc)  
+  Master: Dynamic hostname (updates per node)  
+  Worker Lane: default  
+
+## Daily Usage
 Start CryoSPARC
 
-# Request node
+### Request node
+```
 sh_dev -c 4 -g 1 -t 02:00:00
-
-# Load CUDA
+```
+### Load CUDA
+```
 module load cuda/12.8.0
-
-# Start
+```
+### Start
+```
 ~/start_cryosparc.sh
-Access Interface
+```
 
-# SSH tunnel from local computer
+### Access Interface
+  SSH tunnel from local computer  
+```  
 ssh -L 55550:$(hostname -f):55550 bsingal@login.sherlock.stanford.edu
+```
+Browser  
 
-# Browser
+```
 http://localhost:55550
 Login:
-
-Email: bsingal@stanford.edu
-Password: (your password)
+  Email: bsingal@stanford.edu
+  Password: (your password)
+```
 Stop CryoSPARC
-
+```
 ~/stop_cryosparc.sh
+```
+## Helper Scripts
 
-Helper Scripts
-ScriptPurpose
-~/start_cryosparc.sh Start CryoSPARC
-~/stop_cryosparc.sh Stop CryoSPARC
-~/check_cryosparc.sh Check status
-~/backup_cryosparc.sh Backup database
+| Script | Purpose |
+|--------------------|----------------|
+|~/start_cryosparc.sh| Start CryoSPARC |
+|~/stop_cryosparc.sh | Stop CryoSPARC  |
+|~/check_cryosparc.sh| Check status    | 
+|~/backup_cryosparc.sh | Backup database | 
 
-Troubleshooting
-Common Issues
-Cannot access web interface:
-Verify CryoSPARC is running: ~/check_cryosparc.sh
-Check SSH tunnel is active
-Verify hostname: hostname -f
-Account not found:
+## Troubleshooting
 
+  ### Common Issues:  
+  #### 1. Cannot access web interface:  
+    Verify CryoSPARC is running: ~/check_cryosparc.sh
+    Check SSH tunnel is active
+    Verify hostname: hostname -f
+    
+  #### 2. Account not found:
+  ```
 cryosparcm createuser \
   --email bsingal@stanford.edu \
   --password "YourPassword" \
   --username bsingal \
   --firstname "Bharti" \
   --lastname "Singal"
-Worker not connected:
+  ```
 
+#### 3. Worker not connected:
+```
 cryosparcm cli "get_scheduler_targets()"
 See docs/TROUBLESHOOTING.md for more solutions
+```
+### Storage Management
 
-Storage Management
-
-# Check usage
+#### Check usage
+```
 du -sh /home/groups/mjewett/bsingal/cryosparc/
 du -sh /oak/stanford/groups/mjewett/bsingal/cryosparc/
-
-# Clean cache
+```
+#### Clean cache
+```
 rm -rf /oak/stanford/groups/mjewett/bsingal/cryosparc/cache/*
-Important Notes
-⚠️ Session Limits:
+```
 
+### Important Notes
+```
+⚠️ Session Limits:
 Dev sessions: 2 hours max
 CryoSPARC stops when session ends
 Always stop cleanly before timeout
-💾 Backups:
 
+💾 Backups:
 Backup before major changes
 Weekly backups recommended
 Store on /oak
+
 🔄 Version Upgrades:
 
 Stay on v4.x until Sherlock upgrades GLIBC
 When GLIBC 2.28+ available, can upgrade to v5.x
 Quick Reference
-
-# Essential commands
+```
+### Essential commands
+```
 ~/start_cryosparc.sh
 ~/check_cryosparc.sh
 ~/stop_cryosparc.sh
 ~/backup_cryosparc.sh
 
-# SSH tunnel
+SSH tunnel
 ssh -L 55550:HOSTNAME:55550 bsingal@login.sherlock.stanford.edu
 
-# Web access
+Web access
 http://localhost:55550
-Support
-CryoSPARC: https://guide.cryosparc.com/
-Sherlock: https://www.sherlock.stanford.edu/docs/
-Issues: Open an issue in this repository
+```
+### Support
+  CryoSPARC: https://guide.cryosparc.com/  
+  Sherlock: https://www.sherlock.stanford.edu/docs/  
+  Issues: Open an issue in this repository
 
-Acknowledgments
-Stanford Research Computing (Sherlock)
-Structura Biotechnology (CryoSPARC)
-Jewett Lab (support and resources)
+### Acknowledgments
+  Stanford Research Computing (Sherlock)  
+  Structura Biotechnology (CryoSPARC)  
+  Jewett Lab (support and resources)
 
-Version History
-v1.0.0 (April 13, 2026) - Initial release
-CryoSPARC v4.7.1 successfully installed
-Complete documentation
-Helper scripts configured
-Last Updated: April 13, 2026
+### Version History
+  v1.0.0 (April 13, 2026) - Initial release  
+  CryoSPARC v4.7.1 successfully installed
+  Complete documentation
+  Helper scripts configured
+  Last Updated: April 13, 2026
 
 Maintained by: Bharti Singal (bsingal@stanford.edu)
