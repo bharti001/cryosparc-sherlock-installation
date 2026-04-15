@@ -4,12 +4,11 @@ This directory contains all scripts needed to run CryoSPARC v4.7.1 on Stanford S
 
 ## Directory Structure
 
-scripts/
-├── slurm_templates/      # SLURM job submission templates
+scripts/  
+├── slurm_templates/      # SLURM job submission templates  
 └── management/           # Master node management scripts
 
-ruby
-Copy code
+
 
 ## SLURM Templates
 
