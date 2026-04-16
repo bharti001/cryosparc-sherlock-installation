@@ -159,6 +159,32 @@ Stop CryoSPARC
 ```
 ~/stop_cryosparc.sh
 ```
+
+---
+
+## SLURM Lanes
+
+CryoSPARC is configured with 4 SLURM lanes for flexible job submission:
+
+### Available Lanes
+
+| Lane Name | Partition | Max Time | QOS | GPUs | Use Case |
+|-----------|-----------|----------|-----|------|----------|
+| **hinshaw_gpu** | hinshaw | 7 days | long/normal | Yes | Priority access, long jobs |
+| **owners_gpu** | owners | 2 days | normal | Yes | Owner pool, medium jobs |
+| **gpu_public** | gpu | 2 days | auto | Yes | Public GPU access |
+| **cpu_normal** | normal | 7 days | normal | No | CPU-only jobs |
+
+### Using Lanes in CryoSPARC
+
+1. Build your job in CryoSPARC GUI
+2. Go to **"Queue to Lane"** tab
+3. Select appropriate lane based on job requirements
+4. Set number of GPUs (CryoSPARC auto-calculates CPU/RAM)
+5. Queue the job
+
+**See [docs/LANE_SETUP.md](docs/LANE_SETUP.md) for complete lane documentation.**
+
 ---
 
 ## Helper Scripts
