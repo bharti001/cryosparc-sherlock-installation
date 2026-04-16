@@ -1,5 +1,5 @@
 # Repository Structure
-
+```
 cryosparc-sherlock-installation/
 ├── README.md                              # Main documentation and quick start
 ├── docs/
@@ -21,6 +21,7 @@ cryosparc-sherlock-installation/
 │       ├── check-cs-master.sh             # Check status
 │       └── setup-lanes.sh                 # Configure SLURM lanes
 
+```
 
 ## File Descriptions
 
@@ -114,36 +115,41 @@ Lanes are pre-configured. To reconfigure:
 squeue -u bsingal
 
 ```
+---
 
-SLURM Lane Selection
-When submitting jobs in CryoSPARC GUI:
+## SLURM Lane Selection
+```
+When submitting jobs in CryoSPARC GUI:  
+1. Build your job
+2. Go to "Queue to Lane" tab
+3. Select lane based on needs:
+      hinshaw_gpu - Long jobs, priority access
+      owners_gpu - Medium jobs, shared pool
+      gpu_public - Quick jobs, public access
+      cpu_normal - CPU preprocessing
+4. Set number of GPUs
+5. Queue (CryoSPARC auto-sets CPU/RAM)
+```
+---
 
-Build your job
-Go to "Queue to Lane" tab
-Select lane based on needs:
-hinshaw_gpu - Long jobs, priority access
-owners_gpu - Medium jobs, shared pool
-gpu_public - Quick jobs, public access
-cpu_normal - CPU preprocessing
-Set number of GPUs
-Queue (CryoSPARC auto-sets CPU/RAM)
-Customization
+## Customization
+```
 To customize for different installations:
-
-Edit paths in management scripts:
-
+1. Edit paths in management scripts:
 Software location
 Database location
 Cache paths
-Edit SLURM templates:
 
+2. Edit SLURM templates:
 Partition names
 Account names
 Time limits
 QOS settings
 Edit email in notification scripts
 
-See individual script files for customization comments.
+3. See individual script files for customization comments.
+```
+---
 
 Version History
 v2.0 (April 15, 2026) - SLURM lanes with auto-resource allocation

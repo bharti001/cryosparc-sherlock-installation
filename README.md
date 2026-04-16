@@ -19,6 +19,7 @@ Complete installation guide for CryoSPARC v4.7.1 on Stanford's Sherlock HPC clus
 - [Full Documentation](#full-documentation)
 - [Installation Summary](#installation-summary)
 - [Daily Usage](#daily-usage)
+- [Slurm Scripts] (#slurm-Lanes)
 - [Helper Scripts](#helper-scripts)
 - [Troubleshooting](#troubleshooting)
 - [Support](#support)
@@ -65,29 +66,29 @@ Expected: ldd (GNU libc) 2.17
 ## Quick Start
 
 ### Prerequisites
-
+```
   -Stanford SUNet ID with Sherlock access  
   -Access to /home/groups/mjewett/bsingal/ (software location)  
   -Access to /oak/stanford/groups/mjewett/bsingal/ (database location)  
   -Valid CryoSPARC license ID  
-
+```
 ### Installation Steps
-
-### 1. Request compute node
+```
+1. Request compute node
     ssh bsingal@login.sherlock.stanford.edu  
     sh_dev -c 4 -g 1 -t 02:00:00
 
-### 2. Follow full installation guide
+2. Follow full installation guide
     See docs/INSTALLATION.md for complete instructions
-
+```
 ### Access Web Interface
+```
+1. From your local computer:
+  ssh -NfL localhost:55550:COMPUTE_NODE:55550 bsingal@sherlock.stanford.edu  
 
-### From your local computer:
-  ssh -L 55550:COMPUTE_NODE:55550 bsingal@login.sherlock.stanford.edu  
-
-### Open browser to:
+2. Open browser to:
   http://localhost:55550  
-
+```
 ---
 
 ## Full Documentation
@@ -106,7 +107,7 @@ System Specifications
   GPU: NVIDIA A30 MIG 1g.6gb (6GB)  
   CPU: 32 cores  
   RAM: 257 GB  
-
+```
 Installation Locations
   Software: /home/groups/mjewett/bsingal/cryosparc/software/  
     ├── cryosparc_master/  
@@ -123,39 +124,27 @@ Configuration
   License ID: XXXXX (recieved in email from Cryosparc)  
   Master: Dynamic hostname (updates per node)  
   Worker Lane: default  
-
+```
 ---
 
 ## Daily Usage
-Start CryoSPARC
+```
+squeue -u bsingal
+```
+Once master node is known from squeue, SSH tunnel from local computer  
 
-### Request node
-```
-sh_dev -c 4 -g 1 -t 02:00:00
-```
-### Load CUDA
-```
-module load cuda/12.8.0
-```
-### Start
-```
-~/start_cryosparc.sh
-```
-
-### Access Interface
-  SSH tunnel from local computer  
 ```  
-ssh -L 55550:$(hostname -f):55550 bsingal@login.sherlock.stanford.edu
-```
-Browser  
+1. From your local computer:
+  ssh -NfL localhost:55550:COMPUTE_NODE:55550 bsingal@sherlock.stanford.edu  
 
-```
-http://localhost:55550
-Login:
+2. Open browser to:
+  http://localhost:55550  
+  Login:
   Email: bsingal@stanford.edu
   Password: (your password)
 ```
 Stop CryoSPARC
+
 ```
 ~/stop_cryosparc.sh
 ```
@@ -251,19 +240,7 @@ Stay on v4.x until Sherlock upgrades GLIBC
 When GLIBC 2.28+ available, can upgrade to v5.x
 Quick Reference
 ```
-### Essential commands
-```
-~/start_cryosparc.sh
-~/check_cryosparc.sh
-~/stop_cryosparc.sh
-~/backup_cryosparc.sh
 
-SSH tunnel
-ssh -L 55550:HOSTNAME:55550 bsingal@login.sherlock.stanford.edu
-
-Web access
-http://localhost:55550
-```
 ---
 
 ### Support
