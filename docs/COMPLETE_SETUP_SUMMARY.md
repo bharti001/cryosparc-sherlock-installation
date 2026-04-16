@@ -9,8 +9,6 @@
 
 ---
 
-## What We Accomplished
-
 ### Successfully Installed and Configured:
 
 1. ✅ **CryoSPARC v4.7.1** - Compatible with Sherlock's GLIBC 2.17
@@ -26,12 +24,13 @@
 
 ### Installation Locations
 
-**Software (Home - Fast I/O):**
+**Software (Home - Fast I/O):**  
+`/home/groups/mjewett/bsingal/cryosparc/`
 
-/home/groups/mjewett/bsingal/cryosparc/
-├── software/
-│   ├── cryosparc_master/
-│   └── cryosparc_worker/
+```text
+├── software/  
+│   ├── cryosparc_master/  
+│   └── cryosparc_worker/  
 ├── slurm_templates/
 │   ├── cluster_script_hinshaw_gpu.sh
 │   ├── cluster_script_owners_gpu.sh
@@ -42,20 +41,21 @@
 ├── stop-cs-master.sh
 ├── check-cs-master.sh
 └── setup-lanes.sh
-
+```
 **Data (Oak - Large Storage):**
 
 /oak/stanford/groups/mjewett/bsingal/cryosparc/
+```text
 ├── database/
 ├── projects/
 ├── cache/
 └── backups/
-
+```
 ---
 
 ## Account and Partition Configuration
 
-### Your Sherlock Access
+### Sherlock Access
 
 **Primary Account:** `hinshaw`  
 **QOS Access:** `normal`, `long`
@@ -109,54 +109,51 @@ ssh -L 55550:sh03-11n10.int:55550 bsingal@login.sherlock.stanford.edu
 
 # Web interface
 http://localhost:55550
+```
 
-Daily Usage
-Start Master
-
+**Daily Usage:**
+```
+# Start Master
 cd /home/groups/mjewett/bsingal/cryosparc
 ./submit-cs-master.sh
 
-Check Status
-
+# Check Status
 ./check-cs-master.sh
 cat cs-master-connection.txt
 
-Submit Jobs
-Log into CryoSPARC web interface
-Build job (Motion Correction, Refinement, etc.)
-Select lane in "Queue to Lane" tab:
-hinshaw_gpu for long jobs
-owners_gpu for medium jobs
-gpu_public for quick jobs
-cpu_normal for CPU work
-Set number of GPUs (CryoSPARC auto-calculates CPU/RAM)
-Queue
+# Submit Jobs
+-Log into CryoSPARC web interface
+-Build job (Motion Correction, Refinement, etc.)
+-Select lane in "Queue to Lane" tab:
+  hinshaw_gpu for long jobs
+  owners_gpu for medium jobs
+  gpu_public for quick jobs
+  cpu_normal for CPU work
+-Set number of GPUs (CryoSPARC auto-calculates CPU/RAM)
+-Queue
 
-Monitor Jobs
-
+# Monitor Jobs
 squeue -u bsingal
+```
+---
 
-Key Issues Resolved
-✅ GLIBC 2.17 incompatibility → Used v4.7.1
-
-✅ File descriptor limits → Used compute nodes
-
-✅ Account access → Used hinshaw account
-
-✅ 7-day time limit → Used hinshaw partition
-
-✅ Multi-partition access → Configured 4 SLURM lanes
-
-✅ Resource management → Auto-calculation by CryoSPARC
-
-✅ Queue clutter → Filtered to show only user jobs
-
+## Key Issues Resolved
+✅ GLIBC 2.17 incompatibility → Used v4.7.1  
+✅ File descriptor limits → Used compute nodes  
+✅ Account access → Used hinshaw account  
+✅ 7-day time limit → Used hinshaw partition  
+✅ Multi-partition access → Configured 4 SLURM lanes  
+✅ Resource management → Auto-calculation by CryoSPARC  
+✅ Queue clutter → Filtered to show only user jobs  
 ✅ Memory format errors → Fixed with {{ ram_gb | int }}G
 
-Documentation
-Main README: Quick start and overview
-LANE_SETUP.md: Complete SLURM lane documentation
-REPOSITORY_STRUCTURE.md: File organization
+---
+## Documentation
+Main README: Quick start and overview  
+LANE_SETUP.md: Complete SLURM lane documentation  
+REPOSITORY_STRUCTURE.md: File organization  
 Setup completed successfully on April 15, 2026
+
+---
 
 Maintained by: Bharti Singal (bsingal@stanford.edu)
