@@ -56,7 +56,7 @@ CryoSPARC automatically calculates CPU and RAM based on job type and data size. 
 ## Monitoring Jobs
 
 ### In CryoSPARC GUI
-Event log shows only YOUR jobs with clean output.
+Event log shows only YOUR jobs with clean output using qstat.
 
 ### From Command Line
 Check your jobs:
@@ -79,14 +79,14 @@ scancel JOB_ID
 4. Let CryoSPARC manage resources automatically
 
 ## Files Location
-
+```
 Templates:
 /home/groups/mjewett/bsingal/cryosparc/slurm_templates/
 ├── cluster_script_hinshaw_gpu.sh
 ├── cluster_script_owners_gpu.sh
 ├── cluster_script_gpu_public.sh
 └── cluster_script_cpu.sh
-
+```
 ---
 
 **Maintained by**: Bharti Singal (bsingal@stanford.edu)  
