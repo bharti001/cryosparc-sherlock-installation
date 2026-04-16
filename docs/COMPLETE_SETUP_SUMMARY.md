@@ -4,6 +4,7 @@
 **Cluster:** Stanford Sherlock  
 **CryoSPARC Version:** v4.7.1  
 **Setup Date:** April 15, 2026  
+**Last Updated:** April 15, 2026  
 **Status:** ✅ Successfully Running
 
 ---
@@ -14,10 +15,10 @@
 
 1. ✅ **CryoSPARC v4.7.1** - Compatible with Sherlock's GLIBC 2.17
 2. ✅ **Master Node** - Running on Hinshaw partition (7-day limit)
-3. ✅ **5 SLURM Lanes** - For different job types and partitions
-4. ✅ **9 Helper Scripts** - Automated management scripts
+3. ✅ **4 SLURM Lanes** - Multi-partition job submission with auto-resource allocation
+4. ✅ **Management Scripts** - Automated master control
 5. ✅ **Auto-Resubmitting Master** - Continuous operation
-6. ✅ **Multi-Partition Support** - GPU, Hinshaw, Owners lanes
+6. ✅ **Clean Queue Monitoring** - Shows only user jobs
 
 ---
 
@@ -25,32 +26,30 @@
 
 ### Installation Locations
 
-Software (Home - Fast I/O):
+**Software (Home - Fast I/O):**
+
 /home/groups/mjewett/bsingal/cryosparc/
 ├── software/
 │   ├── cryosparc_master/
 │   └── cryosparc_worker/
 ├── slurm_templates/
-│   ├── gpu_partition.sh
-│   ├── hinshaw_partition.sh
-│   ├── owners_partition.sh
-│   ├── motion_partition.sh
-│   └── ctf_partition.sh
+│   ├── cluster_script_hinshaw_gpu.sh
+│   ├── cluster_script_owners_gpu.sh
+│   ├── cluster_script_gpu_public.sh
+│   └── cluster_script_cpu.sh
 ├── cs-master.sh
 ├── submit-cs-master.sh
 ├── stop-cs-master.sh
 ├── check-cs-master.sh
 └── setup-lanes.sh
 
-Data (Oak - Large Storage):
+**Data (Oak - Large Storage):**
+
 /oak/stanford/groups/mjewett/bsingal/cryosparc/
 ├── database/
 ├── projects/
 ├── cache/
 └── backups/
-
-ruby
-Copy code
 
 ---
 
@@ -63,83 +62,101 @@ Copy code
 
 ### Available Partitions
 
-| Partition | Time Limit | Account | Use Case |
-|:----------|:-----------|:--------|:---------|
-| `hinshaw` | 7 days | hinshaw | Master node (dedicated) |
-| `normal` | 48 hours | N/A | General compute |
-| `gpu` | 48 hours | N/A | GPU jobs |
-| `owners` | 48 hours | hinshaw | Shared owners nodes |
+| Partition | Time Limit | Account | GPUs | Use Case |
+|:----------|:-----------|:--------|:-----|:---------|
+| `hinshaw` | 7 days | hinshaw | 4/node | Master + priority jobs |
+| `owners` | 2 days | hinshaw | Varied | Shared owners pool |
+| `gpu` | 2 days | public | Varied | Public GPU access |
+| `normal` | 7 days | public | No | CPU-only jobs |
 
 ---
 
-## Scripts Created
+## SLURM Lane Configuration
 
-### Main Management Scripts
+### Active Lanes (v2 - April 2026)
 
-1. **cs-master.sh** - Self-resubmitting master job (7 days on hinshaw partition)
-2. **submit-cs-master.sh** - Submit master job
-3. **stop-cs-master.sh** - Stop master gracefully
-4. **check-cs-master.sh** - Check status and connection info
-5. **setup-lanes.sh** - Configure all SLURM lanes
+| Lane Name | Partition | QOS | Time Limit | GPUs | Use Case |
+|:----------|:----------|:----|:-----------|:-----|:---------|
+| **hinshaw_gpu** | hinshaw | long/normal | 7 days | Yes | Priority access, long refinements |
+| **owners_gpu** | owners | normal | 2 days | Yes | Owner pool, medium jobs |
+| **gpu_public** | gpu | auto | 2 days | Yes | Public GPU, general use |
+| **cpu_normal** | normal | normal | 7 days | No | CPU preprocessing |
 
-### SLURM Templates
+### Key Features
 
-1. **gpu_partition.sh** - GPU partition (48h)
-2. **hinshaw_partition.sh** - Hinshaw dedicated (7 days)
-3. **owners_partition.sh** - Owners partition (48h)
-4. **motion_partition.sh** - Motion correction (48h)
-5. **ctf_partition.sh** - CTF estimation (48h, 1 GPU)
+- ✅ **Auto-resource allocation** - CryoSPARC calculates CPU/RAM based on job type
+- ✅ **Clean queue monitoring** - Shows only your jobs (not entire cluster)
+- ✅ **Dynamic GPU selection** - Automatic CUDA device allocation
+- ✅ **Flexible partitions** - Choose based on priority and time needs
 
 ---
 
 ## Master Node Setup
 
 **Configuration:**
-- Partition: hinshaw
-- Account: hinshaw
+- Partition: `hinshaw`
+- Account: `hinshaw`
 - CPUs: 4
 - Memory: 32 GB
-- Time: 7 days
+- Time Limit: 7 days
 - Port: 55550
 - Auto-resubmit: Every 7 days
 
----
-
-## SLURM Lane Configuration
-
-| Lane Name | Partition | Time | Use Case |
-|:----------|:----------|:-----|:---------|
-| gpu_lane | gpu | 48h | General GPU jobs |
-| hinshaw_lane | hinshaw | 7d | Long refinements |
-| owners_lane | owners | 48h | Shared owners |
-| motion_lane | gpu | 48h | Patch Motion |
-| ctf_lane | gpu | 48h | Patch CTF |
-| default | local | N/A | Import/Export |
-
----
-
-## Daily Usage
-
-### Start Master
+**Connection:**
 ```bash
+# SSH tunnel from local computer
+ssh -L 55550:sh03-11n10.int:55550 bsingal@login.sherlock.stanford.edu
+
+# Web interface
+http://localhost:55550
+
+Daily Usage
+Start Master
+
 cd /home/groups/mjewett/bsingal/cryosparc
 ./submit-cs-master.sh
+
 Check Status
-bash
-Copy code
+
 ./check-cs-master.sh
 cat cs-master-connection.txt
-Access Web Interface
-bash
-Copy code
-# From local computer
-ssh -L 55550:NODE:55550 bsingal@login.sherlock.stanford.edu
-# Open: http://localhost:55550
+
+Submit Jobs
+Log into CryoSPARC web interface
+Build job (Motion Correction, Refinement, etc.)
+Select lane in "Queue to Lane" tab:
+hinshaw_gpu for long jobs
+owners_gpu for medium jobs
+gpu_public for quick jobs
+cpu_normal for CPU work
+Set number of GPUs (CryoSPARC auto-calculates CPU/RAM)
+Queue
+
+Monitor Jobs
+
+squeue -u bsingal
+
 Key Issues Resolved
 ✅ GLIBC 2.17 incompatibility → Used v4.7.1
+
 ✅ File descriptor limits → Used compute nodes
+
 ✅ Account access → Used hinshaw account
+
 ✅ 7-day time limit → Used hinshaw partition
-✅ Sleeper job detection → Used log tailing
-✅ Auto-resubmission → Implemented SIGUSR1 handler
+
+✅ Multi-partition access → Configured 4 SLURM lanes
+
+✅ Resource management → Auto-calculation by CryoSPARC
+
+✅ Queue clutter → Filtered to show only user jobs
+
+✅ Memory format errors → Fixed with {{ ram_gb | int }}G
+
+Documentation
+Main README: Quick start and overview
+LANE_SETUP.md: Complete SLURM lane documentation
+REPOSITORY_STRUCTURE.md: File organization
 Setup completed successfully on April 15, 2026
+
+Maintained by: Bharti Singal (bsingal@stanford.edu)
