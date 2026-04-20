@@ -13,6 +13,7 @@
 #SBATCH --output={{ job_log_path_abs }}
 #SBATCH --error={{ job_log_path_abs }}
 #SBATCH --open-mode=append
+#SBATCH --signal=B:USR1@300
 
 available_devs=""
 for devidx in $(seq 0 15);
@@ -26,5 +27,8 @@ do
     fi
 done
 export CUDA_VISIBLE_DEVICES=$available_devs
+
+# Increase heartbeat timeout for long operations
+export CRYOSPARC_DEVELOP=true
 
 {{ run_cmd }}

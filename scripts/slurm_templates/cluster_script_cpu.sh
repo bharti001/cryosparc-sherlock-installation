@@ -5,7 +5,7 @@
 #SBATCH --partition=normal
 #SBATCH --qos=normal
 #SBATCH --account=hinshaw
-#SBATCH --time=7-00:00:00
+#SBATCH --time=2-00:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task={{ num_cpu }}
 #SBATCH --mem={{ ram_gb | int }}G
